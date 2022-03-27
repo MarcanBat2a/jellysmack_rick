@@ -8,6 +8,7 @@ authors = ["Marcu-Andria Battesti <marcu.andria.bat@gmail.com>"]
 python = "^3.7"
 fastapi = "^0.75.0"
 uvicorn = "^0.17.6"
+psycopg2-binary = "^2.9.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
