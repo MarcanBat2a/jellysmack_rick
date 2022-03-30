@@ -2,9 +2,10 @@ class CommentManager:
     def __init__(self, adapter) -> None:
         self.adapter = adapter
     
+
     #Create
     def create_comment_character_episode(self, comment:str, id_character:int, id_episode:int):
-        
+        #Appeler manager episode voir si le personnage est bien dans l'episode
         return self.adapter.create_comment(comment=comment, id_character=id_character, id_episode=id_episode)
     
 
@@ -26,15 +27,30 @@ class CommentManager:
 
 
     def get_by_id_character(self, id_character:int):
-        return self.adapter.get_by_id_character(id_character).to_dict()
+        list_comments = []
+        for comment in self.adapter.get_by_id_character(id_character):
+            list_comments.append(comment.to_dict())
+        
+        return list_comments
+
 
 
     def get_by_id_episode(self, id_episode:int):
-        return self.adapter.get_by_id_episode(id_episode).to_dict()
+        list_comments = []
+        for comment in self.adapter.get_by_id_episode(id_episode):
+            list_comments.append(comment.to_dict())
+        
+        return list_comments
+
 
     
     def get_by_id_character_and_episode(self, id_character:int, id_episode:int):
-        return self.adapter.get_by_id_character_and_episode(id_character, id_episode).to_dict()
+        list_comments = []
+        for comment in self.adapter.get_by_id_character_and_episode(id_character, id_episode):
+            list_comments.append(comment.to_dict())
+        
+        return list_comments
+
 
 
     #Update

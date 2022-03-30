@@ -17,17 +17,13 @@ app.include_router(episode.router)
 app.include_router(character.router)
 app.include_router(comment.router)
 
+
 @app.get("/")
 def read_root():
     return 'Hello Smack'
 
 
-@app.get("/populate-db")
+@app.put("/populate-db")
 def populate_db():
     import_data_to_database(db)
     return 'Hello Smack'
-
-
-if __name__== "__main__":
-    print("juste pour voir")
-    #import_data_to_database(db)

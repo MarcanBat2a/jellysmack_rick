@@ -19,7 +19,7 @@ def create_comment_on_character_and_episode(comment:str, character_id:int, episo
 
 @router.post("/comments/{comment}/episodes/{episode_id}")
 def create_comment_on_character_and_episode(comment:str, episode_id:int):
-    return comment_manager.create_episode(comment, episode_id)
+    return comment_manager.create_comment_episode(comment, episode_id)
 
 
 @router.post("/comments/{comment}/characters/{character_id}")

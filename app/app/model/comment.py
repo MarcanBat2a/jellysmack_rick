@@ -1,20 +1,8 @@
 class Comment():
-    def __init__(self, id:int, id_character:int, id_comment:int, comment:str) -> None:
+    def __init__(self, id:int, id_character:int, id_episode:int, comment:str) -> None:
         self.id = id
         self.id_character = id_character
-        self.id_comment = id_comment
-        self.comment = comment
-    
-
-    def __init__(self, id:int, id_character:int, comment:str) -> None:
-        self.id = id
-        self.id_character = id_character
-        self.comment = comment
-    
-
-    def __init__(self, id:int, id_comment:int, comment:str) -> None:
-        self.id = id
-        self.id_comment = id_comment
+        self.id_episode = id_episode
         self.comment = comment
     
     
@@ -31,5 +19,5 @@ class Comment():
     def to_dict(self):
         return {"id": self.id,
                 "id_character": self.id_character,
-                "id_comment": self.id_comment,
+                "id_episode": self.id_episode,
                 "comment": self.comment}

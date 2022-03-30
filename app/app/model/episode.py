@@ -1,9 +1,10 @@
 class Episode():
-    def __init__(self, id:int, name:str, air_date:str, episode:str) -> None:
+    def __init__(self, id:int, name:str, air_date:str, episode:str, list_character=[]) -> None:
         self.id = id
         self.name = name
         self.air_date = air_date
         self.episode = episode
+        self.list_character = list_character
     
     
     @staticmethod
@@ -14,7 +15,7 @@ class Episode():
             air_date = episode.get('air_date'),
             episode = episode.get('episode')
         )
-
+    
     
     def to_dict(self):
         return {"id": self.id,
