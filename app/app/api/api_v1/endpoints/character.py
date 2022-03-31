@@ -13,6 +13,6 @@ character_manager = CharacterManager(adapter)
 router = APIRouter()
 
 @router.get("/")
-def read_characters(limit:int=0, page:int=0):
-    return character_manager.get_all(limit, page), 200
+def read_characters(limit:int=0, page:int=0, search:str=""):
+    return character_manager.get_all(limit, page, search), 200
 

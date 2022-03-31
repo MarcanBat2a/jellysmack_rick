@@ -3,9 +3,9 @@ class CharacterManager:
         self.adapter = adapter
     
     
-    def get_all(self, limit, num_page):
+    def get_all(self, limit, num_page, filter):
         list_characters = []
-        for character in self.adapter.get_all(limit, num_page):
+        for character in self.adapter.get_all(limit, num_page, filter):
             list_characters.append(character.to_dict())
         
         return list_characters
