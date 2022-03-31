@@ -30,9 +30,29 @@ class AdapterComment(AdapterItem):
 
 
     #READ
-    def get_by_id_character(self, id_character:int):
-        query = "SELECT * FROM comments WHERE id_character=%s"
-        self.database.cur.execute(query, (id_character,))
+    def get_all(self, limit:int, num_page:int):
+        if limit != 0 and num_page != 0:
+            offset = limit*(num_page-1)
+            query = "SELECT * FROM comments LIMIT %s OFFSET %s"
+            self.database.cur.execute(query, (limit, offset))
+        else:
+            query = "SELECT * FROM comments"
+            self.database.cur.execute(query)
+        character_records = self.database.cur.fetchall()
+        list_comments = []
+        for character in character_records:
+            list_comments.append(self.model.generate(character))
+        return list_comments
+
+
+    def get_by_id_character(self, id_character:int, limit:int, num_page:int):
+        if limit != 0 and num_page != 0:
+            offset = limit*(num_page-1)
+            query = "SELECT * FROM comments WHERE id_character=%s LIMIT %s OFFSET %s"
+            self.database.cur.execute(query, (id_character, limit, offset))
+        else:
+            query = "SELECT * FROM comments WHERE id_character=%s"
+            self.database.cur.execute(query, (id_character,))
         comment_records = self.database.cur.fetchall()
         list_comments = []
 
@@ -41,9 +61,14 @@ class AdapterComment(AdapterItem):
         return list_comments
 
 
-    def get_by_id_episode(self, id_episode:int):
-        query = "SELECT * FROM comments WHERE id_episode=%s"
-        self.database.cur.execute(query, (id_episode,))
+    def get_by_id_episode(self, id_episode:int, limit:int, num_page:int):
+        if limit != 0 and num_page != 0:
+            offset = limit*(num_page-1)
+            query = "SELECT * FROM comments WHERE id_episode=%s LIMIT %s OFFSET %s"
+            self.database.cur.execute(query, (id_episode, limit, offset))
+        else:     
+            query = "SELECT * FROM comments WHERE id_episode=%s"
+            self.database.cur.execute(query, (id_episode,))
         comment_records = self.database.cur.fetchall()
         list_comments = []
         for comment in comment_records:
@@ -51,9 +76,14 @@ class AdapterComment(AdapterItem):
         return list_comments
 
 
-    def get_by_id_character_and_episode(self, id_character:int, id_episode:int):
-        query = "SELECT * FROM comments WHERE id_character=%s and id_episode=%s"
-        self.database.cur.execute(query, (id_character, id_episode))
+    def get_by_id_character_and_episode(self, id_character:int, id_episode:int, limit:int, num_page:int):
+        if limit != 0 and num_page != 0:
+            offset = limit*(num_page-1)
+            query = "SELECT * FROM comments WHERE id_character=%s and id_episode=%s LIMIT %s OFFSET %s"
+            self.database.cur.execute(query, (id_character, id_episode, limit, offset))
+        else:
+            query = "SELECT * FROM comments WHERE id_character=%s and id_episode=%s"
+            self.database.cur.execute(query, (id_character, id_episode))
         comment_records = self.database.cur.fetchall()
         list_comments = []
         for comment in comment_records:

@@ -18,35 +18,35 @@ class CommentManager:
 
 
     #Read
-    def get_all(self):
+    def get_all(self, limit:int, page:int):
         list_comments = []
-        for comment in self.adapter.get_all():
+        for comment in self.adapter.get_all(limit, page):
             list_comments.append(comment.to_dict())
         
         return list_comments
 
 
-    def get_by_id_character(self, id_character:int):
+    def get_by_id_character(self, id_character:int, limit:int, page:int):
         list_comments = []
-        for comment in self.adapter.get_by_id_character(id_character):
+        for comment in self.adapter.get_by_id_character(id_character, limit, page):
             list_comments.append(comment.to_dict())
         
         return list_comments
 
 
 
-    def get_by_id_episode(self, id_episode:int):
+    def get_by_id_episode(self, id_episode:int, limit:int, page:int):
         list_comments = []
-        for comment in self.adapter.get_by_id_episode(id_episode):
+        for comment in self.adapter.get_by_id_episode(id_episode, limit, page):
             list_comments.append(comment.to_dict())
         
         return list_comments
 
 
     
-    def get_by_id_character_and_episode(self, id_character:int, id_episode:int):
+    def get_by_id_character_and_episode(self, id_character:int, id_episode:int, limit:int, page:int):
         list_comments = []
-        for comment in self.adapter.get_by_id_character_and_episode(id_character, id_episode):
+        for comment in self.adapter.get_by_id_character_and_episode(id_character, id_episode, limit, page):
             list_comments.append(comment.to_dict())
         
         return list_comments
