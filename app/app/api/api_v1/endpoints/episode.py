@@ -12,6 +12,6 @@ episode_manager = EpisodeManager(adapter)
 
 router = APIRouter()
 
-@router.get("/episodes")
+@router.get("/")
 def read_episodes():
     return episode_manager.get_all(), 200

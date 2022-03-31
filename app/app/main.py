@@ -4,19 +4,15 @@ from typing import Optional
 from fastapi import FastAPI
 
 from app.adapters.postgres.client import Database
-from app.api import episode
-from app.api import character
-from app.api import comment
+
+from app.api.api_v1.api import api_router
 from app.data.import_data import import_data_to_database
 
 db = Database()
 
 app = FastAPI()
 
-app.include_router(episode.router)
-app.include_router(character.router)
-app.include_router(comment.router)
-
+app.include_router(api_router)
 
 @app.get("/")
 def read_root():
