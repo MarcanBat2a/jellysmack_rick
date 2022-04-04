@@ -4,7 +4,11 @@ from app.adapters.episode_table import AdapterEpisode
 from math import ceil
 
 class AdapterComment(AdapterBase):
-    COLUMNS = ["id", "comment", "id_character", "id_episode"]
+    COLUMNS = ["id", 
+            "comment", 
+            "id_character", 
+            "id_episode"]
+
     def __init__(self, database) -> None:
         super().__init__(database = database, item="comments", model=Comment)
     
@@ -32,7 +36,7 @@ class AdapterComment(AdapterBase):
 
 
     #READ
-    def get_by_id_character(self, id_character:int, limit:int, num_page:int):
+    def get_by_id_character(self, id_character:int, limit:int, num_page:int)->list:
         if limit != 0 and num_page != 0:
             offset = limit*(num_page-1)
             query = "SELECT * FROM comments WHERE id_character=%s LIMIT %s OFFSET %s"
@@ -48,7 +52,7 @@ class AdapterComment(AdapterBase):
         return list_comments
 
 
-    def get_by_id_episode(self, id_episode:int, limit:int, num_page:int):
+    def get_by_id_episode(self, id_episode:int, limit:int, num_page:int)->list:
         if limit != 0 and num_page != 0:
             offset = limit*(num_page-1)
             query = "SELECT * FROM comments WHERE id_episode=%s LIMIT %s OFFSET %s"
@@ -63,7 +67,7 @@ class AdapterComment(AdapterBase):
         return list_comments
 
 
-    def get_by_id_character_and_episode(self, id_character:int, id_episode:int, limit:int, num_page:int):
+    def get_by_id_character_and_episode(self, id_character:int, id_episode:int, limit:int, num_page:int)->list:
         if limit != 0 and num_page != 0:
             offset = limit*(num_page-1)
             query = "SELECT * FROM comments WHERE id_character=%s and id_episode=%s LIMIT %s OFFSET %s"
@@ -78,7 +82,7 @@ class AdapterComment(AdapterBase):
         return list_comments
 
 
-    def get_all_with_filter_pagination(self, limit: int, num_page:int, list_all_filters:str):
+    def get_all_with_filter_pagination(self, limit: int, num_page:int, list_all_filters:str)->list:
         query = "SELECT * FROM comments"
         values_filer = []
         placeHolder_params_pagine = []

@@ -6,7 +6,7 @@ class AdapterEpisode(AdapterBase):
         super().__init__(database = database, item="episodes", model=Episode)
     
 
-    def get_by_id_all_characters(self, id):
+    def get_by_id_all_characters(self, id:int)->list:
         query = "SELECT id_character FROM characters_episodes WHERE id_episode = {}".format(id)
         self.database.cur.execute(query)
         list_id_characters = []

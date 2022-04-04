@@ -1,5 +1,6 @@
 from app.core.base_manager import BaseManager
 
+
 class CommentManager(BaseManager):
     def __init__(self, adapter) -> None:
         super().__init__(adapter)    
@@ -51,3 +52,4 @@ class CommentManager(BaseManager):
     #Delete
     def delete_comment(self, id:int):
         return self.adapter.delete_row(id=id)
+
