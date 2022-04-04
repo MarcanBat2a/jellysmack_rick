@@ -27,14 +27,12 @@ class CommentManager(BaseManager):
         return list_comments
 
 
-
     def get_by_id_episode(self, id_episode:int, limit:int, page:int):
         list_comments = []
         for comment in self.adapter.get_by_id_episode(id_episode, limit, page):
             list_comments.append(comment.to_dict())
         
         return list_comments
-
 
     
     def get_by_id_character_and_episode(self, id_character:int, id_episode:int, limit:int, page:int):
@@ -43,7 +41,6 @@ class CommentManager(BaseManager):
             list_comments.append(comment.to_dict())
         
         return list_comments
-
 
 
     #Update

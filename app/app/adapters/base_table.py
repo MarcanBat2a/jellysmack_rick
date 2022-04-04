@@ -19,7 +19,7 @@ class AdapterBase(ABC):
         "NOT"]
 
 
-    def __init__(self, database, item, model) -> None:
+    def __init__(self, database, item:str, model) -> None:
         self.database = database
         self.item = item
         self.model = model
@@ -45,19 +45,23 @@ class AdapterBase(ABC):
 
                         if type(filter.get("value")) is list:
                             filter["value"] = tuple(filter.get("value"))
-                        print(filter.get("value"))
                         list_filters.append(filter.get("value"))
 
         return query, list_filters
         
 
-    def pagination(self, limit, num_page):
+    def pagination(self, limit:int, num_page:int):
         placeHolder_params = []
         offset = limit*(num_page-1)
         query = " LIMIT %s OFFSET %s"
         placeHolder_params.append(limit)
         placeHolder_params.append(offset)
         return query, placeHolder_params
+
+
+    def get_number_rows(self, filter:list=[]):
+        self.database.cur.execute(query, placeHolder_params)
+        character_records = self.database.cur.fetchall()
 
 
     def get_all(self):
@@ -69,12 +73,3 @@ class AdapterBase(ABC):
             list_items.append(self.model.generate(ite))
         return list_items
     
-
-    def get_by_id(self, id):
-        query = "SELECT * FROM %s WHERE %s"
-        self.database.cur.execute(query, (self.item, id))
-        item_records = self.database.cur.fetchall()
-        list_items = []
-        for ite in item_records:
-            list_items.append(self.model.generate(ite))
-        return list_items

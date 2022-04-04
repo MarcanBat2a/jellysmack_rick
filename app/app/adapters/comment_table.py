@@ -1,6 +1,7 @@
 from app.model.comment import Comment
 from app.adapters.base_table import AdapterBase
 from app.adapters.episode_table import AdapterEpisode
+from math import ceil
 
 class AdapterComment(AdapterBase):
     COLUMNS = ["id", "comment", "id_character", "id_episode"]
@@ -31,21 +32,6 @@ class AdapterComment(AdapterBase):
 
 
     #READ
-    def get_all_with_filter_pagination(self, limit: int, num_page:int, list_all_filters:str):
-        if limit != 0 and num_page != 0:
-            offset = limit*(num_page-1)
-            query = "SELECT * FROM comments LIMIT %s OFFSET %s"
-            self.database.cur.execute(query, (limit, offset))
-        else:
-            query = "SELECT * FROM comments"
-            self.database.cur.execute(query)
-        character_records = self.database.cur.fetchall()
-        list_comments = []
-        for character in character_records:
-            list_comments.append(self.model.generate(character))
-        return list_comments
-
-
     def get_by_id_character(self, id_character:int, limit:int, num_page:int):
         if limit != 0 and num_page != 0:
             offset = limit*(num_page-1)
@@ -100,6 +86,9 @@ class AdapterComment(AdapterBase):
             query_filter, values_filer = self.parse_filter(list_all_filters)
             query += query_filter
         if limit != 0 and num_page != 0:
+            self.database.cur.execute("SELECT COUNT(*) FROM comments", values_filer)
+            total_rows = self.database.cur.fetchall()[0].get("count")
+            total_page = ceil(total_rows/limit)
             query_pagine, placeHolder_params_pagine = self.pagination(limit, num_page)
             query += query_pagine
 
@@ -113,7 +102,7 @@ class AdapterComment(AdapterBase):
         for comment in comment_records:
             list_comments.append(self.model.generate(comment))
 
-        return list_comments
+        return list_comments, total_page
 
 
     #UPDATE

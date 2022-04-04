@@ -14,12 +14,13 @@ class BaseManager(ABC):
         return list_object
     
 
-    def get_all_with_filter_pagination(self, limit, num_page, filter):
+    def get_all_with_filter_pagination(self, limit:int, num_page:int, filter:str):
         list_object = []
-        for adapter in self.adapter.get_all_with_filter_pagination(limit, num_page, filter):
+        list_result, total_page = self.adapter.get_all_with_filter_pagination(limit, num_page, filter)
+        for adapter in list_result:
             list_object.append(adapter.to_dict())
         
-        return list_object
+        return list_object, {"total page":total_page}
 
     
     def get_by_id(self, id):
