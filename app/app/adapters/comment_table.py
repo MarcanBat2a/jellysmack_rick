@@ -1,8 +1,9 @@
 from app.model.comment import Comment
-from app.adapters.item_table import AdapterItem
+from app.adapters.base_table import AdapterBase
 from app.adapters.episode_table import AdapterEpisode
 
-class AdapterComment(AdapterItem):
+class AdapterComment(AdapterBase):
+    COLUMNS = ["id", "comment", "id_character", "id_episode"]
     def __init__(self, database) -> None:
         super().__init__(database = database, item="comments", model=Comment)
     
@@ -30,7 +31,7 @@ class AdapterComment(AdapterItem):
 
 
     #READ
-    def get_all(self, limit:int, num_page:int):
+    def get_all_with_filter_pagination(self, limit: int, num_page:int, list_all_filters:str):
         if limit != 0 and num_page != 0:
             offset = limit*(num_page-1)
             query = "SELECT * FROM comments LIMIT %s OFFSET %s"
@@ -88,6 +89,30 @@ class AdapterComment(AdapterItem):
         list_comments = []
         for comment in comment_records:
             list_comments.append(self.model.generate(comment))
+        return list_comments
+
+
+    def get_all_with_filter_pagination(self, limit: int, num_page:int, list_all_filters:str):
+        query = "SELECT * FROM comments"
+        values_filer = []
+        placeHolder_params_pagine = []
+        if len(list_all_filters) > 0:
+            query_filter, values_filer = self.parse_filter(list_all_filters)
+            query += query_filter
+        if limit != 0 and num_page != 0:
+            query_pagine, placeHolder_params_pagine = self.pagination(limit, num_page)
+            query += query_pagine
+
+     
+        placeHolder_params = values_filer + placeHolder_params_pagine
+        
+        self.database.cur.execute(query, placeHolder_params)
+        comment_records = self.database.cur.fetchall()
+        
+        list_comments = []
+        for comment in comment_records:
+            list_comments.append(self.model.generate(comment))
+
         return list_comments
 
 

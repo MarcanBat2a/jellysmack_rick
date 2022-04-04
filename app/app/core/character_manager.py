@@ -1,15 +1,5 @@
-class CharacterManager:
-    def __init__(self, adapter) -> None:
-        self.adapter = adapter
-    
-    
-    def get_all(self, limit, num_page, filter):
-        list_characters = []
-        for character in self.adapter.get_all(limit, num_page, filter):
-            list_characters.append(character.to_dict())
-        
-        return list_characters
+from app.core.base_manager import BaseManager
 
-    
-    def get_by_id(self, id):
-        return self.adapter.get_by_id(id).to_dict()
+class CharacterManager(BaseManager):
+    def __init__(self, adapter) -> None:
+        super().__init__(adapter)

@@ -1,7 +1,8 @@
-class CommentManager:
+from app.core.base_manager import BaseManager
+
+class CommentManager(BaseManager):
     def __init__(self, adapter) -> None:
-        self.adapter = adapter
-    
+        super().__init__(adapter)    
 
     #Create
     def create_comment_character_episode(self, comment:str, id_character:int, id_episode:int):
@@ -18,14 +19,6 @@ class CommentManager:
 
 
     #Read
-    def get_all(self, limit:int, page:int):
-        list_comments = []
-        for comment in self.adapter.get_all(limit, page):
-            list_comments.append(comment.to_dict())
-        
-        return list_comments
-
-
     def get_by_id_character(self, id_character:int, limit:int, page:int):
         list_comments = []
         for comment in self.adapter.get_by_id_character(id_character, limit, page):

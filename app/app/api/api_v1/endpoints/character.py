@@ -14,5 +14,7 @@ router = APIRouter()
 
 @router.get("/")
 def read_characters(limit:int=0, page:int=0, search:str=""):
-    return character_manager.get_all(limit, page, search), 200
-
+    if (limit>0 and page>0) or search != "":
+        return character_manager.get_all_with_filter_pagination(limit, page, search), 200
+    else:
+        return character_manager.get_all(), 200
