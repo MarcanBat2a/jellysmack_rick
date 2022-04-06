@@ -21,7 +21,7 @@ sudo -E docker-compose up
 
 
 ## Interactive API docs
-(./images/routes.png "API DOC")
+(images/routes.png "API DOC")
 You can see the interactive API documentation (provided by <a href="https://github.com/swagger-api/swagger-ui" class="external-link" target="_blank">Swagger UI</a> )
 
 Now go to <a href="http://127.0.0.1:5000/docs" class="external-link" target="_blank">http://127.0.0.1:5000/docs</a>.
