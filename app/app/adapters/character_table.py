@@ -12,24 +12,25 @@ class AdapterCharacter(AdapterBase):
 
     def get_all_with_filter_pagination(self, limit: int, num_page:int, list_all_filters:str):
         query = "SELECT * FROM characters"
-        values_filer = []
+        values_filter = []
         placeholder_params_pagine = []
         total_page = 1
         if len(list_all_filters) > 0:
-            query_filter, values_filer = self.parse_filter(list_all_filters)
+            query_filter, values_filter = self.parse_filter(list_all_filters)
             query += query_filter
         if limit != 0 and num_page != 0:
-            self.database.cur.execute("SELECT COUNT(*) FROM characters", values_filer)
+            query_count = "SELECT COUNT(*) FROM characters"+query_filter
+            self.database.cur.execute(query_count, values_filter)
             total_rows = self.database.cur.fetchall()[0].get("count")
+            print(values_filter)
             total_page = ceil(total_rows/limit)
             query_pagine, placeholder_params_pagine = self.pagination(limit, num_page)
             query += query_pagine
 
-        placeholder_params = values_filer + placeholder_params_pagine
+        placeholder_params = values_filter + placeholder_params_pagine
 
         self.database.cur.execute(query, placeholder_params)
         character_records = self.database.cur.fetchall()
-        
         list_characters = []
         for character in character_records:
             list_characters.append(self.model.generate(character))

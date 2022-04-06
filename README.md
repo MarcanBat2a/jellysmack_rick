@@ -53,13 +53,13 @@ SELECT * FROM characters WHERE name LIKE "Rick%";
 `http://127.0.0.1:5000/characters?search=[{"id":[{"operator":"IN", "value":[1,2,3]}]},{"name":[{"operator":"LIKE", "value":"Rick%"}]}]`
 is equivalent to:
 ```bash
-SELECT * FROM [table] WHERE id IN (1,2,3) OR name LIKE "Rick%";
+SELECT * FROM characters WHERE id IN (1,2,3) OR name LIKE "Rick%";
 ```
 
 `http://127.0.0.1:5000/characters?search=[{"id":[{"operator":"IN", "value":[1,2,3]}],"name":[{"operator":"LIKE", "value":"Rick%"}]}] `
 is equivalent to:
 ```bash
-SELECT * FROM [table] WHERE id IN (1,2,3) AND name LIKE "Rick%";
+SELECT * FROM characters WHERE id IN (1,2,3) AND name LIKE "Rick%";
 ```
 
 

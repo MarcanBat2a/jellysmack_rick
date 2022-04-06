@@ -18,7 +18,7 @@ class AdapterComment(AdapterBase):
     #CREATE
     def create_comment(self, **kwargs):
         if "id_episode" in kwargs.keys() and "id_character" in kwargs.keys():
-            episode = AdapterEpisode(self.database)
+            episode = AdapterEpisode()
             list_id_characters_on_episode = episode.get_by_id_all_characters(kwargs.get("id_episode"))
             if kwargs.get("id_character") not in list_id_characters_on_episode:
                 return "ERROR"
