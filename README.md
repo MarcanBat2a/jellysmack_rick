@@ -1,28 +1,64 @@
-# jellysmack_rick
+# FastAPI JellySmack test
 
+## Structure
+The backend is a RESTful API built in FastAPI and a PostgreSQL database.
+
+## Usage
+### docker-compose
+Create a file `.env` to create the environment variables like in `.env_example`
+
+```bash
 source .env
+```
+
+To run the application we need to have `Docker` and `docker-compose` installed. 
+The execute from the root directory named 'jelly_project':
+```bash
 sudo -E docker-compose up
+```
 
+### Tests
+
+
+## Interactive API docs
+You can see the interactive API documentation (provided by <a href="https://github.com/swagger-api/swagger-ui" class="external-link" target="_blank">Swagger UI</a> )
+
+Now go to <a href="http://127.0.0.1:5000/docs" class="external-link" target="_blank">http://127.0.0.1:5000/docs</a>.
+
+## Alternative API docs
+And now, go to <a href="http://127.0.0.1:5000/redoc" class="external-link" target="_blank">http://127.0.0.1:5000/redoc</a>.
+
+You will see the alternative automatic documentation (provided by <a href="https://github.com/Rebilly/ReDoc" class="external-link" target="_blank">ReDoc</a>):
+
+## Examples
+### Populate database 
 To populate database :
-/populate-db
+http://127.0.0.1:5000/populate-db
 
-Route :
-List all episodes
-/episodes
-List all episodes
-/characters
+### Filters EXAMPLE
 
+`http://127.0.0.1:5000/characters?search=[{"id":[{"operator":"IN", "value":[1,2,3]}]}]`
+is equivalent to:
+```bash
+SELECT * FROM characters WHERE id IN (1,2,3);
+```
 
-[{"id":[{"operator":"IN", "value":[1,2,3]}]}]
-SELECT * FROM [table] WHERE id IN (1,2,3)
+`http://127.0.0.1:5000/characters?search=[{"name":[{"operator":"LIKE", "value":"Rick%"}]}]`
+is equivalent to:
+```bash
+SELECT * FROM characters WHERE name LIKE "Rick%";
+```
 
-[{"name":[{"operator":"LIKE", "value":"Rick%"}]}]
-SELECT * FROM [table] WHERE name LIKE "Rick%"
-
-[{"id":[{"operator":"IN", "value":[1,2,3]}]},
-{"name":[{"operator":"LIKE", "value":"Rick%"}]}] 
+`http://127.0.0.1:5000/characters?search=[{"id":[{"operator":"IN", "value":[1,2,3]}]},{"name":[{"operator":"LIKE", "value":"Rick%"}]}]`
+is equivalent to:
+```bash
 SELECT * FROM [table] WHERE id IN (1,2,3) OR name LIKE "Rick%"
+```
 
-[{"id":[{"operator":"IN", "value":[1,2,3]}],
-"name":[{"operator":"LIKE", "value":"Rick%"}]}] 
+`http://127.0.0.1:5000/characters?search=[{"id":[{"operator":"IN", "value":[1,2,3]}],"name":[{"operator":"LIKE", "value":"Rick%"}]}] `
+is equivalent to:
+```bash
 SELECT * FROM [table] WHERE id IN (1,2,3) AND name LIKE "Rick%"
+```
+
+
