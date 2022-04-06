@@ -59,11 +59,6 @@ class AdapterBase(ABC):
         return query, placeHolder_params
 
 
-    def get_number_rows(self, filter:list=[]):
-        self.database.cur.execute(query, placeHolder_params)
-        character_records = self.database.cur.fetchall()
-
-
     def get_all(self):
         query = "SELECT * FROM {}".format(self.item)
         self.database.cur.execute(query)

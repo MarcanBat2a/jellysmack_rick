@@ -21,6 +21,7 @@ sudo -E docker-compose up
 
 
 ## Interactive API docs
+(./images/routes.jpg "API DOC")
 You can see the interactive API documentation (provided by <a href="https://github.com/swagger-api/swagger-ui" class="external-link" target="_blank">Swagger UI</a> )
 
 Now go to <a href="http://127.0.0.1:5000/docs" class="external-link" target="_blank">http://127.0.0.1:5000/docs</a>.
@@ -52,13 +53,30 @@ SELECT * FROM characters WHERE name LIKE "Rick%";
 `http://127.0.0.1:5000/characters?search=[{"id":[{"operator":"IN", "value":[1,2,3]}]},{"name":[{"operator":"LIKE", "value":"Rick%"}]}]`
 is equivalent to:
 ```bash
-SELECT * FROM [table] WHERE id IN (1,2,3) OR name LIKE "Rick%"
+SELECT * FROM [table] WHERE id IN (1,2,3) OR name LIKE "Rick%";
 ```
 
 `http://127.0.0.1:5000/characters?search=[{"id":[{"operator":"IN", "value":[1,2,3]}],"name":[{"operator":"LIKE", "value":"Rick%"}]}] `
 is equivalent to:
 ```bash
-SELECT * FROM [table] WHERE id IN (1,2,3) AND name LIKE "Rick%"
+SELECT * FROM [table] WHERE id IN (1,2,3) AND name LIKE "Rick%";
 ```
 
 
+## Time spent :
+### Environnement, Architecture
+Around 6h
+
+### Feature 1 
+1. Import data from JSON to PostgreSQL : < 30 min
+2. To expose two API routes : =~ 1h
+
+### Feature 2
+To create comment table + API CRUD on comment : =~ 1h30
+
+### Feature 3
+1. Pagination =~ 1h
+2. Filters =~ 4h
+
+### Feature 5 
+Export comments to csv or xls : >15 min 

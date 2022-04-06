@@ -15,24 +15,27 @@ class AdapterComment(AdapterBase):
 
     #CREATE
     def create_comment(self, **kwargs):
-        if "id_episode" in kwargs.keys() and "id_character" in kwargs.keys():
-            episode = AdapterEpisode(self.database)
-            list_id_characters_on_episode = episode.get_by_id_all_characters(kwargs.get("id_episode"))
-            if kwargs.get("id_character") not in list_id_characters_on_episode:
-                return "ERROR"
-      
-        columns = []
-        valuePlaceholders = []
-        values = []
-        for column, value in kwargs.items():
-            columns.append(column)
-            valuePlaceholders.append('%s')
-            values.append(value)
+        try:
+            if "id_episode" in kwargs.keys() and "id_character" in kwargs.keys():
+                episode = AdapterEpisode(self.database)
+                list_id_characters_on_episode = episode.get_by_id_all_characters(kwargs.get("id_episode"))
+                if kwargs.get("id_character") not in list_id_characters_on_episode:
+                    return "ERROR"
+        
+            columns = []
+            valuePlaceholders = []
+            values = []
+            for column, value in kwargs.items():
+                columns.append(column)
+                valuePlaceholders.append('%s')
+                values.append(value)
 
-        query = "INSERT INTO comments ({}) VALUES ({})".format(', '.join(columns), ', '.join(valuePlaceholders))
-        self.database.cur.execute(query, values)
-        self.database.conn.commit()
-        return "success"
+            query = "INSERT INTO comments ({}) VALUES ({})".format(', '.join(columns), ', '.join(valuePlaceholders))
+            self.database.cur.execute(query, values)
+            self.database.conn.commit()
+            return "success"
+        except Exception as e:
+            return(e)
 
 
     #READ

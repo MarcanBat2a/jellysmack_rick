@@ -13,22 +13,4 @@ class Database():
         self.conn = psycopg.connect("host={} dbname={} user={} password={} port={}".format(self.HOST, self.DATABASE, self.USER, self.PASSWORD, self.PORT))
         self.cur = self.conn.cursor(cursor_factory=RealDictCursor)
 
-
-    def insert(self, tablename:str, **kwargs):
-        columns = []
-        valuePlaceholders = []
-        values = []
-        for column, value in kwargs.items():
-            columns.append(column)
-            valuePlaceholders.append('%s')
-            values.append(value)
-
-        query = "INSERT INTO " + tablename + " (%s) VALUES (%s)" % (', '.join(columns), ', '.join(valuePlaceholders))
-        
-        try:
-            self.cur.execute(query, values)
-            self.conn.commit()
-        except psycopg.DatabaseError as e:
-            print(e)
-
     

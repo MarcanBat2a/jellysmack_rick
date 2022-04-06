@@ -7,7 +7,6 @@ class CommentManager(BaseManager):
 
     #Create
     def create_comment_character_episode(self, comment:str, id_character:int, id_episode:int):
-        #Appeler manager episode voir si le personnage est bien dans l'episode
         return self.adapter.create_comment(comment=comment, id_character=id_character, id_episode=id_episode)
     
 

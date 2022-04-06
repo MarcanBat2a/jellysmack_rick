@@ -22,6 +22,3 @@ class BaseManager(ABC):
         
         return list_object, {"total page":total_page}
 
-    
-    def get_by_id(self, id):
-        return self.adapter.get_by_id(id).to_dict()
