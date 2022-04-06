@@ -21,7 +21,7 @@ sudo -E docker-compose up
 
 
 ## Interactive API docs
-[image](images/routes.png "API DOC")
+[API ROUTES](images/routes.png "API DOC")
 You can see the interactive API documentation (provided by <a href="https://github.com/swagger-api/swagger-ui" class="external-link" target="_blank">Swagger UI</a> )
 
 Now go to <a href="http://127.0.0.1:5000/docs" class="external-link" target="_blank">http://127.0.0.1:5000/docs</a>.
@@ -80,3 +80,7 @@ To create comment table + API CRUD on comment : =~ 1h30
 
 ### Feature 5 
 Export comments to csv or xls : >15 min 
+
+## Commits
+I made a mistake on the commits and realized it later. So you will find my local commits below.
+[Commits](images/git.png "commit"))
