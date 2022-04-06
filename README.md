@@ -82,5 +82,5 @@ To create comment table + API CRUD on comment : =~ 1h30
 Export comments to csv or xls : >15 min 
 
 ## Commits
-I made a mistake on the commits and realized it later. So you will find my local commits below.
-[Commits](images/git.png "commit"))
+I made a mistake on the commits and realized it later. So you will find my local commits here :
+[Commits](images/git.png "commit")
