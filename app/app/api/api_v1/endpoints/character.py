@@ -1,14 +1,9 @@
-from fastapi import APIRouter
-from app.core.character_manager import CharacterManager
 from app.adapters.character_table import AdapterCharacter
-from app.adapters.postgres.client import Database
+from app.core.character_manager import CharacterManager
+from fastapi import APIRouter
 
-# Cest de la merde à voir pour eviter la redondance des imports dans main
-database = Database()
-adapter = AdapterCharacter(database)
+adapter = AdapterCharacter()
 character_manager = CharacterManager(adapter)
-# Cest de la merde à voir pour eviter la redondance des imports
-
 
 router = APIRouter()
 

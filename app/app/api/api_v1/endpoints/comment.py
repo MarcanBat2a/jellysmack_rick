@@ -1,33 +1,21 @@
 import io
+
 import pandas as pd
 from app.adapters.comment_table import AdapterComment
-from app.adapters.postgres.client import Database
 from app.core.comment_manager import CommentManager
 from fastapi import APIRouter
 from fastapi.responses import StreamingResponse
 
-# Cest de la merde à voir pour eviter la redondance des imports dans main
-database = Database()
-adapter = AdapterComment(database)
+adapter = AdapterComment()
 comment_manager = CommentManager(adapter)
-# Cest de la merde à voir pour eviter la redondance des imports
 
 
 router = APIRouter()
+
 #CREATE
 @router.post("/{comment}/characters/{character_id}/episodes/{episode_id}")
 def create_comment_on_character_and_episode(comment:str, character_id:int, episode_id:int):
     return comment_manager.create_comment_character_episode(comment, character_id, episode_id)
-
-
-@router.post("/{comment}/episodes/{episode_id}")
-def create_comment_on_character_and_episode(comment:str, episode_id:int):
-    return comment_manager.create_comment_episode(comment, episode_id)
-
-
-@router.post("/{comment}/characters/{character_id}")
-def create_comment_on_character(comment:str, character_id:int):
-    return comment_manager.create_comment_character(comment, character_id)
 
 
 #READ

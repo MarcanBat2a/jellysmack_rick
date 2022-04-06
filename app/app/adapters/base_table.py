@@ -1,5 +1,6 @@
-from abc import ABC
+from app.adapters.postgres.client import Database
 import json
+from abc import ABC
 
 
 class AdapterBase(ABC):
@@ -11,52 +12,52 @@ class AdapterBase(ABC):
         "<",
         ">=",
         "<=",
-        "<>", 	
-        "IN",	
-        "BETWEEN",	
+        "<>",
+        "IN",
+        "BETWEEN",
         "LIKE",
         "IS NULL",
         "NOT"]
 
 
-    def __init__(self, database, item:str, model) -> None:
-        self.database = database
+    def __init__(self, item:str, model) -> None:
+        self.database = Database()
         self.item = item
         self.model = model
-    
+
 
     def parse_filter(self, list_all_filters:str):
         list_all_filters = json.loads(list_all_filters)
         list_filters = []
         last_id_filters = -1
         query = " WHERE"
-        for i_filters in range(len(list_all_filters)):
-            for key, filters in list_all_filters[i_filters].items():
-                for filter in filters:  
-                    if filter.get("operator").upper() in self.OPERATORS and key.lower() in self.COLUMNS:
+        for i_filters, value in enumerate(list_all_filters):
+            for key, filters in value.items():
+                for a_filter in filters:
+                    if a_filter.get("operator").upper() in self.OPERATORS and key.lower() in self.COLUMNS:
                         if last_id_filters == i_filters:
-                            query += ' AND '+ key + ' ' + filter.get("operator") + ' %s'
+                            query += ' AND '+ key + ' ' + a_filter.get("operator") + ' %s'
                             
                         elif last_id_filters == -1:
-                            query += ' '+key+' '+ filter.get("operator")+' %s'
+                            query += ' '+key+' '+ a_filter.get("operator")+' %s'
                         else:
-                            query += ' OR '+key+' '+ filter.get("operator")+' %s'
+                            query += ' OR '+key+' '+ a_filter.get("operator")+' %s'
                         last_id_filters = i_filters
 
-                        if type(filter.get("value")) is list:
-                            filter["value"] = tuple(filter.get("value"))
-                        list_filters.append(filter.get("value"))
+                        if isinstance(a_filter.get("value"), list):
+                            a_filter["value"] = tuple(a_filter.get("value"))
+                        list_filters.append(a_filter.get("value"))
 
         return query, list_filters
         
 
     def pagination(self, limit:int, num_page:int):
-        placeHolder_params = []
+        placeholder_params = []
         offset = limit*(num_page-1)
         query = " LIMIT %s OFFSET %s"
-        placeHolder_params.append(limit)
-        placeHolder_params.append(offset)
-        return query, placeHolder_params
+        placeholder_params.append(limit)
+        placeholder_params.append(offset)
+        return query, placeholder_params
 
 
     def get_all(self):

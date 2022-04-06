@@ -11,6 +11,7 @@ uvicorn = "^0.17.6"
 psycopg2-binary = "^2.9.3"
 pandas = "1.0"
 XlsxWriter = "^3.0.3"
+requests = "^2.27.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

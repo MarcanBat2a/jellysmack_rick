@@ -1,6 +1,8 @@
+import os
+
 import psycopg2 as psycopg
 from psycopg2.extras import RealDictCursor
-import os
+
 
 class Database():
     def __init__(self):
