@@ -87,3 +87,9 @@ Export comments to csv or xls : >15 min
 ## Commits
 I made a mistake on the commits and realized it later. So you will find my local commits here :
 [Commits](images/git.png "commit")
+
+
+## Difficulties
+1. I had difficulties for the tests, I will explain to you during the interview (I will try if I can to implement it in the meantime).
+2. In a rush, I misused git.
+3. The environment took a long time because I had some "bugs" at the beginning. (I started with a ubuntu 18.04 with nothing installed)
