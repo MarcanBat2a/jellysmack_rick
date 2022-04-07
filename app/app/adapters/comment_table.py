@@ -22,7 +22,6 @@ class AdapterComment(AdapterBase):
             list_id_characters_on_episode = episode.get_by_id_all_characters(kwargs.get("id_episode"))
             if kwargs.get("id_character") not in list_id_characters_on_episode:
                 return "ERROR"
-    
         columns = []
         value_placeholders = []
         values = []
@@ -31,7 +30,11 @@ class AdapterComment(AdapterBase):
             value_placeholders.append('%s')
             values.append(value)
 
-        query = "INSERT INTO comments ({}) VALUES ({})".format(', '.join(columns), ', '.join(value_placeholders))
+        """ query = "INSERT INTO comments (air_date, id_character) VALUES (01/02/2022,1)"
+        self.database.cur.execute(query)
+        #query = "INSERT INTO comments (air_date, {}) VALUES ({}, {})".format(', '.join(columns), date, ', '.join(value_placeholders))
+        #self.database.cur.execute(query, values)"""
+        query = "INSERT INTO comments (air_date, {}) VALUES (NOW(), {})".format(', '.join(columns), ', '.join(value_placeholders))
         self.database.cur.execute(query, values)
         self.database.conn.commit()
         return "success"
@@ -87,7 +90,7 @@ class AdapterComment(AdapterBase):
     def get_all_with_filter_pagination(self, limit: int, num_page:int, list_all_filters:str)->list:
         query = "SELECT * FROM comments"
         values_filer = []
-        placeHolder_params_pagine = []
+        placeholder_params_pagine = []
         if len(list_all_filters) > 0:
             query_filter, values_filer = self.parse_filter(list_all_filters)
             query += query_filter
@@ -95,11 +98,11 @@ class AdapterComment(AdapterBase):
             self.database.cur.execute("SELECT COUNT(*) FROM comments", values_filer)
             total_rows = self.database.cur.fetchall()[0].get("count")
             total_page = ceil(total_rows/limit)
-            query_pagine, placeHolder_params_pagine = self.pagination(limit, num_page)
+            query_pagine, placeholder_params_pagine = self.pagination(limit, num_page)
             query += query_pagine
 
      
-        placeholder_params = values_filer + placeHolder_params_pagine
+        placeholder_params = values_filer + placeholder_params_pagine
         
         self.database.cur.execute(query, placeholder_params)
         comment_records = self.database.cur.fetchall()
@@ -112,17 +115,17 @@ class AdapterComment(AdapterBase):
 
 
     #UPDATE
-    def update_row(self, id:int, comment:str):
+    def update_row(self, id_comment:int, comment:str):
         query = "UPDATE comments SET comment = %s WHERE id = %s"
-        self.database.cur.execute(query, (comment, id))
+        self.database.cur.execute(query, (comment, id_comment))
         self.database.conn.commit()
 
         return "success"
 
     
     #DELETE
-    def delete_row(self, id:int):
+    def delete_row(self, id_comment:int):
         query = "DELETE FROM comments WHERE id=%s"
-        self.database.cur.execute(query, (id,))
+        self.database.cur.execute(query, (id_comment,))
         self.database.conn.commit()
         return "success"

@@ -10,3 +10,4 @@ router = APIRouter()
 @router.get("/")
 def read_episodes():
     return episode_manager.get_all()
+    

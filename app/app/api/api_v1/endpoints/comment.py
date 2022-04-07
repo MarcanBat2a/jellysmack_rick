@@ -55,16 +55,15 @@ def delete_comment(id:int):
 
 
 @router.get("/export")
-def export_comment(format:str):
+def export_comment(extension:str):
     list_dataframe_comment = []
 
     for comment in comment_manager.get_all():
         list_dataframe_comment.append(pd.DataFrame(comment.values()).T)
-    
     dataframe_result = pd.concat(list_dataframe_comment, ignore_index=True)
     dataframe_result.columns = comment.keys()
 
-    if format.lower()=="csv":
+    if extension.lower()=="csv":
         stream = io.StringIO()
         dataframe_result.to_csv(stream, index = False)
         response = StreamingResponse(iter([stream.getvalue()]),
@@ -80,5 +79,3 @@ def export_comment(format:str):
         response = StreamingResponse(io.BytesIO(xlsx_data), media_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
         response.headers["Content-Disposition"] = "attachment; filename=filename=export.xls"
     return response
-
-

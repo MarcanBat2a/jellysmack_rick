@@ -29,6 +29,7 @@ CREATE TABLE IF NOT EXISTS comments
     id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
     id_character integer,
     id_episode integer,
+    air_date date,
     comment character varying COLLATE pg_catalog."default" NOT NULL,
     CONSTRAINT comments_pkey PRIMARY KEY (id),
     CONSTRAINT fk_comments_id_character FOREIGN KEY (id_character)

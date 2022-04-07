@@ -3,6 +3,9 @@
 ## Structure
 The backend is a RESTful API built in FastAPI and a PostgreSQL database.
 
+### conceptual data model
+You can see the CDM [here](images/MCD.png "MCD DOC")
+
 ## Usage
 ### docker-compose
 Create a file `.env` to create the environment variables like in `.env_example`

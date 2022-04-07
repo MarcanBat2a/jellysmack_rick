@@ -37,7 +37,6 @@ class AdapterBase(ABC):
                     if a_filter.get("operator").upper() in self.OPERATORS and key.lower() in self.COLUMNS:
                         if last_id_filters == i_filters:
                             query += ' AND '+ key + ' ' + a_filter.get("operator") + ' %s'
-                            
                         elif last_id_filters == -1:
                             query += ' '+key+' '+ a_filter.get("operator")+' %s'
                         else:
@@ -49,7 +48,7 @@ class AdapterBase(ABC):
                         list_filters.append(a_filter.get("value"))
 
         return query, list_filters
-        
+
 
     def pagination(self, limit:int, num_page:int):
         placeholder_params = []
