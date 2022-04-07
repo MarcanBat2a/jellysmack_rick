@@ -13,7 +13,7 @@ class AdapterComment(AdapterBase):
 
     def __init__(self) -> None:
         super().__init__(item="comments", model=Comment)
-    
+
 
     #CREATE
     def create_comment(self, **kwargs):
@@ -29,11 +29,6 @@ class AdapterComment(AdapterBase):
             columns.append(column)
             value_placeholders.append('%s')
             values.append(value)
-
-        """ query = "INSERT INTO comments (air_date, id_character) VALUES (01/02/2022,1)"
-        self.database.cur.execute(query)
-        #query = "INSERT INTO comments (air_date, {}) VALUES ({}, {})".format(', '.join(columns), date, ', '.join(value_placeholders))
-        #self.database.cur.execute(query, values)"""
         query = "INSERT INTO comments (air_date, {}) VALUES (NOW(), {})".format(', '.join(columns), ', '.join(value_placeholders))
         self.database.cur.execute(query, values)
         self.database.conn.commit()
@@ -100,13 +95,9 @@ class AdapterComment(AdapterBase):
             total_page = ceil(total_rows/limit)
             query_pagine, placeholder_params_pagine = self.pagination(limit, num_page)
             query += query_pagine
-
-     
         placeholder_params = values_filer + placeholder_params_pagine
-        
         self.database.cur.execute(query, placeholder_params)
         comment_records = self.database.cur.fetchall()
-        
         list_comments = []
         for comment in comment_records:
             list_comments.append(self.model.generate(comment))
@@ -122,7 +113,7 @@ class AdapterComment(AdapterBase):
 
         return "success"
 
-    
+
     #DELETE
     def delete_row(self, id_comment:int):
         query = "DELETE FROM comments WHERE id=%s"

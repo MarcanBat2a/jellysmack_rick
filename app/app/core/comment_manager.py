@@ -37,7 +37,6 @@ class CommentManager(BaseManager):
         list_comments = []
         for comment in self.adapter.get_by_id_character_and_episode(id_character, id_episode, limit, page):
             list_comments.append(comment.to_dict())
-        
         return list_comments
 
 
@@ -49,4 +48,3 @@ class CommentManager(BaseManager):
     #Delete
     def delete_comment(self, id_comment:int):
         return self.adapter.delete_row(id_comment=id_comment)
-

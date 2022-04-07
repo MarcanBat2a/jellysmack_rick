@@ -73,6 +73,7 @@ def export_comment(extension:str):
     else:
         stream = io.BytesIO()
         writer = pd.ExcelWriter(stream, engine='xlsxwriter')
+        dataframe_result['date'] = dataframe_result['date'].dt.tz_localize(None)
         dataframe_result.to_excel(writer, index = False)
         writer.save()
         xlsx_data = stream.getvalue()
